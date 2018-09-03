@@ -1,5 +1,6 @@
 require "ruby_wasi/version"
 require "ruby_wasi/countries"
+require "ruby_wasi/properties"
 require "httparty"
 
 module RubyWasi
@@ -23,11 +24,18 @@ module RubyWasi
         :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
       }
       path = "#{@path}/#{url}?id_company=#{@company_id}&wasi_token=#{@api_token}"
+      unless params.empty?
+        path += '&' + URI.encode_www_form(params)
+      end
       JSON.parse(self.class.get(path, options).body)
     end
 
     def countries
       RubyWasi::Countries.new(self)
+    end
+
+    def properties
+      properies = RubyWasi::Properties.new(self)
     end
 
   end

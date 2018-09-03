@@ -7,7 +7,7 @@ module RubyWasi
       super(api_instance)
     end
 
-    def all_countries
+    def all
       @api_instance.get('location/all-countries')
     end
   end
